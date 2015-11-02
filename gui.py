@@ -18,6 +18,8 @@ from Tkinter import Tk, Frame, Menu, BOTH, Text, Menu, END
 from Tkinter import *
 from tkFileDialog import askopenfilename
 from multilistbox import  MultiListbox
+import tkMessageBox
+from typesetting import typeset
 
 
 
@@ -36,6 +38,7 @@ class Program(Frame):
         self.min_margin = 10
         self.max_margin = 100
         self.margin_value = self.min_margin
+        self.words = []
 
         menubar = Menu(self.parent)
         self.parent.config(menu=menubar)
@@ -52,7 +55,6 @@ class Program(Frame):
         w_list_label = Label(left_grid,text="Lista de palabras")
         w_list_label.pack(side=TOP)
         self.w_list = MultiListbox(left_grid,(("Palabra",20),("Longitud",10)))
-        self.w_list.insert(1,("bocachancla",len("bocachancla")))
         self.w_list.pack(side=BOTTOM,fill=BOTH,expand=TRUE)
         left_grid.pack(side=LEFT,fill=BOTH,expand=TRUE)
 
@@ -62,11 +64,14 @@ class Program(Frame):
         margin_label = Label(up_grid,text="Margen")
         margin_label.pack(side=LEFT,expand=TRUE)
         self.margin_scale = Scale(up_grid,orient=HORIZONTAL,showvalue=0,\
-            variable=self.margin_value,from_=self.min_margin,to=self.max_margin)
+            variable=self.margin_value,from_=self.min_margin,to=self.max_margin,
+            command=self.refresh_margin)
         self.margin_scale.pack(side=LEFT)
         self.margin_spinbox = Spinbox(up_grid,\
             textvariable=self.margin_value,from_=self.min_margin,to=self.max_margin)
-        self.margin_spinbox.pack(side=RIGHT)
+        self.margin_spinbox.pack(side=LEFT)
+        typeset_btn = Button(up_grid, text ="Typeset", command =self.typeset)
+        typeset_btn.pack(side=RIGHT)
         up_grid.pack(side=TOP)
 
         self.text = Text(right_grid)
@@ -81,24 +86,37 @@ class Program(Frame):
     def openfile(self):
         filename = askopenfilename(parent=self.parent)
         lines = [line.rstrip('\n') for line in open(filename,'r')]
-        words = []
+        self.words = []
         for line in lines:
-           words.extend(line.split(' '))
+           self.words.extend(line.split(' '))
 
-        for word in words:
+        for word in self.words:
             self.insert_list(word)
 
-        print words
+    def refresh_margin(self,value):
+        self.margin_value=value
+
+    def get_margin(self):
+        return int(self.margin_value)
+
+    def typeset(self):
+        try:
+            self.clear_text()
+            text = typeset(self.words,self.get_margin())
+            self.insert_text(text)
+        except IOError as e:
+            tkMessageBox.showwarning(
+            "Exception",
+            e )
 
     def clear_text(self):
         self.text.delete("%d.%d"%(0,0),END)
-        self.clear_list()
 
     def insert_text(self,texto):
         self.text.insert(INSERT,texto)
 
     def clear_list(self):
-        self.w_list.delete(0)
+        self.w_list.delete(0,END)
         pass
 
     def insert_list(self,word):

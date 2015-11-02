@@ -79,38 +79,16 @@ def to_lines(n,p,words):
       i = j
     return lines
 
-def main():
-
-  if(len(argv) != 3):
-    print len(argv)
-    exit(1)
-  if not os.path.isfile(argv[1]):
-    exit(2)
-  if not is_number(argv[2]):
-    exit(3)
-
-  lines = [line.rstrip('\n') for line in open(argv[1],'r')]
-  words = []
-  for line in lines:
-    words.extend(line.split(' '))
-
-  print words
-  # TODO: leo palabras de un fichero
-  # words = ["Tushar",\
-  #      "Roy",\
-  #      "likes",\
-  #      "to",\
-  #      "code"]
-
-  # TODO: leo maximos caracteres por linea
-  # m = 10
-  m = int(argv[2])
+def typeset(words,m):
 
   # TODO: paso la lista de palabras a lista de longitudes de palabras
   l = [len(word) for word in words]
 
+  if not words:
+      raise IOError("No se han introducido palabras")
+
   if max(l) > m:
-      exit(4)
+      raise IOError("Margen inferior a la longitud por palabra(%d,%d)"%(max(l),m))
 
   # Numero de palabras
   n = len(words)
@@ -120,7 +98,6 @@ def main():
     for j in range(i,n):
       mA[i][j]=linecost(n,m,i,j,l)
       print mA[i][j] if mA[i][j]!=INF else "INF",
-
     print
 
   # TODO: calculo coste total
@@ -133,12 +110,13 @@ def main():
   # TODO: construimos el parrafo desde el principio al final
   lines = to_lines(n,p,words)
 
+  text = ""
+
   for line in lines:
+    text += " ".join(line)+"\n"
     print len(" ".join(line))," ".join(line)
 
-
-
-  return 0
+  return text
 
 if __name__ == '__main__':
   main()
