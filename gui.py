@@ -1,19 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-ZetCode Tkinter tutorial
-
-This program shows a simple
-menu. It has one command, which
-will terminate the program, when
-selected.
-
-author: Jan Bodnar
-last modified: December 2010
-website: www.zetcode.com
-"""
-
 from Tkinter import Tk, Frame, Menu, BOTH, Text, Menu, END
 from Tkinter import *
 from tkFileDialog import askopenfilename
