@@ -29,7 +29,7 @@ Autoría y distribución
 
 ### Distribución
 
-El programa se hizo con fines educativos para la asignatura de **Algoritmos y Computación** de la mención de _ del Grado Superior de Ingenería Informática_ en la **Escuela Técnica Superior de Ingeniería Informática** ([ETSII](inf.uva.es)).
+El programa se hizo con fines educativos para la asignatura de **Algoritmos y Computación** de la mención de _Computación_ del _Grado Superior de Ingenería Informática_ en la **Escuela Técnica Superior de Ingeniería Informática** ([ETSII](inf.uva.es)).
 
 La distribución está sujeta a las condiciones descritas en la cabecera del fichero `multilistbox.py`, debido al Copyright que contiene dicho fichero.
 
