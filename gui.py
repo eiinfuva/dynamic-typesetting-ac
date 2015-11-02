@@ -1,6 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+"""Python implementation of Typesetting, Dynamic Programming
+
+This program test the implementation software of Text justification at \'typesetting.py\'.
+"""
+__author__ =  'Ismael Taboada'
+__version__=  '1.0'
+
 from Tkinter import Tk, Frame, Menu, BOTH, Text, Menu, END
 from Tkinter import *
 from tkFileDialog import askopenfilename

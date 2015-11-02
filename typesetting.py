@@ -2,6 +2,13 @@
 #
 # -*- coding: utf-8 -*-
 
+"""Python implementation of Typesetting, Dynamic Programming
+
+This script implement the Text justification by Dynamic Programming.
+"""
+__author__ =  'Ismael Taboada'
+__version__=  '1.0'
+
 from sys import maxint as INF
 from sys import argv
 import os
