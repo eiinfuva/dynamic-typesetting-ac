@@ -42,68 +42,45 @@ def dynamic_typeset(n,M,last,lengths):
     # print "-".join(map(str,last))
     i-=1
 
-  print "inicio bucle con i=",i
   while i>=0:
     # print " ".join(map(str,best))
     # print "-".join(map(str,last))
     min_cost = INF
     lessk = n
     for k in range(n-1,i,-1):
-      print i,k,
       c = linecost(n,M,i,k-1,lengths)
-      print c if c!=INF else "inf",
       if(c==INF):
-        print
         continue
       c += best[k]
-      print "->",c
       if c < min_cost:
         min_cost = c
         lessk = k
       # print "{} cost({},{})={}+{}={}".format(min_cost,i-2,k,linecost(n,M,i-2,k,lengths),best[k],linecost(n,M,i-2,k,lengths)+best[k])
-    print
     best[i] = min_cost
     last[i] = lessk
-    print ",".join(map(str,best))
-    print "->".join(map(str,last))
     i -= 1
 
   return best[0]
 
+def to_lines(n,p,words):
+    lines=[]
+    i = 0
+    while i < n:
+      j = p[i]# last[]
+      lines.append(words[i:j])
+      i = j
+    return lines
 
-
-def main():
-
-  if(len(argv) != 3):
-    print len(argv)
-    exit(1)
-  if not os.path.isfile(argv[1]):
-    exit(2)
-  if not is_number(argv[2]):
-    exit(3)
-
-  lines = [line.rstrip('\n') for line in open(argv[1],'r')]
-  words = []
-  for line in lines:
-    words.extend(line.split(' '))
-
-  print words
-  # TODO: leo palabras de un fichero
-  # words = ["Tushar",\
-  #      "Roy",\
-  #      "likes",\
-  #      "to",\
-  #      "code"]
-
-  # TODO: leo maximos caracteres por linea
-  # m = 10
-  m = int(argv[2])
+def typeset(words,m):
 
   # TODO: paso la lista de palabras a lista de longitudes de palabras
   l = [len(word) for word in words]
 
+  if not words:
+      raise IOError("No se han introducido palabras")
+
   if max(l) > m:
-      exit(4)
+      raise IOError("Margen inferior a la longitud por palabra(%d,%d)"%(max(l),m))
 
   # Numero de palabras
   n = len(words)
@@ -112,9 +89,6 @@ def main():
   for i in range(n):
     for j in range(i,n):
       mA[i][j]=linecost(n,m,i,j,l)
-      print mA[i][j] if mA[i][j]!=INF else "INF",
-
-    print
 
   # TODO: calculo coste total
   p = [0 for _ in range(n)]
@@ -124,19 +98,15 @@ def main():
 
   #return
   # TODO: construimos el parrafo desde el principio al final
-  lines=[]
-  i = 0
-  while i < n:
-    j = p[i]# last[]
-    lines.append(words[i:j])
-    i = j
+  lines = to_lines(n,p,words)
+
+  text = ""
 
   for line in lines:
-    print len(" ".join(line))," ".join(line)
+    text += " ".join(line)+"\n"
+    print "%3d"%len(" ".join(line))," ".join(line)
 
-
-
-  return 0
+  return text
 
 if __name__ == '__main__':
   main()
