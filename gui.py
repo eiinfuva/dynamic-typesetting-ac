@@ -45,7 +45,7 @@ class Program(Frame):
 
         fileMenu = Menu(menubar)
         fileMenu.add_command(label="Open", command=self.openfile)
-        fileMenu.add_command(label="Clear", command=self.clear_text)
+        fileMenu.add_command(label="Clear", command=self.clear)
         fileMenu.add_separator()
         fileMenu.add_command(label="Exit", command=self.onExit)
         menubar.add_cascade(label="File", menu=fileMenu)
@@ -122,6 +122,10 @@ class Program(Frame):
     def insert_list(self,word):
         self.w_list.insert(END,(word,len(word)))
         pass
+
+    def clear(self):
+        self.clear_list()
+        self.clear_text()
 
 def main():
 

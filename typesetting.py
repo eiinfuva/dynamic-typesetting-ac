@@ -42,30 +42,22 @@ def dynamic_typeset(n,M,last,lengths):
     # print "-".join(map(str,last))
     i-=1
 
-  print "inicio bucle con i=",i
   while i>=0:
     # print " ".join(map(str,best))
     # print "-".join(map(str,last))
     min_cost = INF
     lessk = n
     for k in range(n-1,i,-1):
-      print i,k,
       c = linecost(n,M,i,k-1,lengths)
-      print c if c!=INF else "inf",
       if(c==INF):
-        print
         continue
       c += best[k]
-      print "->",c
       if c < min_cost:
         min_cost = c
         lessk = k
       # print "{} cost({},{})={}+{}={}".format(min_cost,i-2,k,linecost(n,M,i-2,k,lengths),best[k],linecost(n,M,i-2,k,lengths)+best[k])
-    print
     best[i] = min_cost
     last[i] = lessk
-    print ",".join(map(str,best))
-    print "->".join(map(str,last))
     i -= 1
 
   return best[0]
@@ -97,8 +89,6 @@ def typeset(words,m):
   for i in range(n):
     for j in range(i,n):
       mA[i][j]=linecost(n,m,i,j,l)
-      print mA[i][j] if mA[i][j]!=INF else "INF",
-    print
 
   # TODO: calculo coste total
   p = [0 for _ in range(n)]
@@ -114,7 +104,7 @@ def typeset(words,m):
 
   for line in lines:
     text += " ".join(line)+"\n"
-    print len(" ".join(line))," ".join(line)
+    print "%3d"%len(" ".join(line))," ".join(line)
 
   return text
 
