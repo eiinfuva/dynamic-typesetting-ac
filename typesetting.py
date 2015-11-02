@@ -70,7 +70,14 @@ def dynamic_typeset(n,M,last,lengths):
 
   return best[0]
 
-
+def to_lines(n,p,words):
+    lines=[]
+    i = 0
+    while i < n:
+      j = p[i]# last[]
+      lines.append(words[i:j])
+      i = j
+    return lines
 
 def main():
 
@@ -124,12 +131,7 @@ def main():
 
   #return
   # TODO: construimos el parrafo desde el principio al final
-  lines=[]
-  i = 0
-  while i < n:
-    j = p[i]# last[]
-    lines.append(words[i:j])
-    i = j
+  lines = to_lines(n,p,words)
 
   for line in lines:
     print len(" ".join(line))," ".join(line)
